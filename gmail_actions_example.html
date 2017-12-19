@@ -1,0 +1,24 @@
+<!--
+This is a sample email taken from https://developers.google.com/gmail/schemas/apps-script-tutorial
+and used to test the GMail actions support.
+-->
+<html>
+  <head>
+    <script type="application/ld+json">
+    {
+      "@context":       "http://schema.org",
+      "@type":          "EmailMessage",
+      "description":    "Check this out",
+      "action": {
+        "@type": "ViewAction",
+        "url":   "https://www.youtube.com/watch?v=eH8KwfdkSqU"
+      }
+    }
+    </script>
+  </head>
+  <body>
+    <p>
+      This a test for a Go-To action in Gmail.
+    </p>
+  </body>
+</html>
